@@ -6,7 +6,7 @@ int main(void){
 
     std::string crop;
     std::string rainfall;
-    int pH;
+    float pH;
     int month;
 
     std::ofstream outputFile("input.txt", std::ios::app);
@@ -37,8 +37,25 @@ int main(void){
         }
 
         std::string input = crop+","+rainfall+","+std::to_string(pH)+","+std::to_string(month);
-        outputFile << input;
+        outputFile << input<< std::endl;
     }
+
+    system("python predict.py");
+
+    std::ifstream inputFile("results.txt");
+
+    if (!inputFile.is_open()) {
+        std::cerr << "Error: Could not open the file." << std::endl;
+        return 1;
+    }
+
+     std::string line;
+    while (std::getline(inputFile, line)) {
+        std::cout << line << std::endl;
+    }
+
+    inputFile.close();
+    outputFile.close();
 
     return 0;
 }
