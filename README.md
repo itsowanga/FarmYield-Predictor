@@ -235,6 +235,6 @@ MIT License - Open source for agricultural development
 
 ## Contact & Support
 
-For issues or suggestions, contact: [Your GitHub/Email]
+For issues or suggestions, contact: sowanga.mbane@gmail.com/@itsowanga at github.com
 
 **Mission:** Empower smallholder farmers in rural South Africa with affordable, offline-first yield prediction technology.
