@@ -7,7 +7,6 @@ int main(void){
     std::string crop;
     std::string rainfall;
     float pH;
-    int month;
 
     std::ofstream outputFile("input.txt", std::ios::app);
 
@@ -30,13 +29,9 @@ int main(void){
             std::cout<<"Value out of bounds. Enter correct pH."<<std::endl;
             std::cin>> pH;  
         }
-        std::cin>> month;
-        while(month<1 || month >12){
-            std::cout<<"Value out of bounds. Enter correct month."<<std::endl;
-            std::cin>> month;  
-        }
 
-        std::string input = crop+","+rainfall+","+std::to_string(pH)+","+std::to_string(month);
+
+        std::string input = crop+","+rainfall+","+std::to_string(pH);
         outputFile << input<< std::endl;
     }
 

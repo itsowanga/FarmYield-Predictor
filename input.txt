@@ -1,0 +1,5 @@
+Maize,450,6.5
+Maize,380,5.8
+Maize,520,6.2
+Maize,320,5.5
+Maize,600,6.8

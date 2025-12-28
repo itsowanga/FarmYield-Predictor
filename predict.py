@@ -8,7 +8,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 
 # Load dataset
-columns = ['crop', 'rainfall', 'pH', 'month']
+columns = ['crop', 'rainfall', 'ph']
 
 try:
     data = pd.read_csv('input.txt', names=columns)
@@ -24,18 +24,60 @@ except Exception as e:
 
 
 # Separate features from the target
-x = data.drop(['crop', 'month'], axis=1)
+x = data.drop(['crop'], axis=1)
 
 # Load the model
 model_file = 'model.joblib'
 model = joblib.load(model_file)
 # Predict the target
 y_pred = model.predict(x)
-# Output predictions
+
+# Create results dataframe
+results_data = []
 
 for i, prediction in enumerate(y_pred):
-    with open('results.txt', 'a') as f:
-        f.write(f"Expected = {prediction:.1f} tons/ha\n")
+    rainfall = x.iloc[i]['rainfall']
+    crop = data.iloc[i]['crop']
+    
+    # Yield risk
+    if prediction < 3.0:
+        yield_status = "LOW YIELD RISK"
+    else:
+        yield_status = "Good yield expected"
+    
+    # Rainfall risk
+    if rainfall < 400:
+        rainfall_status = "Low rainfall - Consider drought-resistant seed"
+    else:
+        rainfall_status = "Rainfall is adequate"
+    
+    # Planting window
+    planting_window = "October - November"
+    
+    results_data.append({
+        'Crop': crop,
+        'Rainfall (mm)': rainfall,
+        'Soil pH': x.iloc[i]['ph'],
+        'Predicted Yield (tons/ha)': round(prediction, 1),
+        'Yield Status': yield_status,
+        'Rainfall Status': rainfall_status,
+        'Planting Window': planting_window
+    })
 
-print("Predictions saved to results.txt")
-f.close()
+# Save to CSV
+results_df = pd.DataFrame(results_data)
+results_df.to_csv('results.csv', index=False)
+print("Results saved to results.csv")
+
+# Plot: Rainfall vs Predicted Yield
+plt.figure(figsize=(10, 6))
+plt.scatter(results_df['Rainfall (mm)'], results_df['Predicted Yield (tons/ha)'], 
+            color='green', s=100, alpha=0.7, edgecolors='black')
+plt.xlabel('Rainfall (mm)', fontsize=12)
+plt.ylabel('Predicted Yield (tons/ha)', fontsize=12)
+plt.title('FarmYield Predictor - Rainfall vs Yield Forecast', fontsize=14, fontweight='bold')
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig('yield_forecast.png', dpi=300)
+print("Forecast plot saved to yield_forecast.png")
+plt.close()
