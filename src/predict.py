@@ -11,7 +11,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 columns = ['crop', 'rainfall', 'ph']
 
 try:
-    data = pd.read_csv('input.txt', names=columns)
+    data = pd.read_csv('../data/input.txt', names=columns)
 except FileNotFoundError:
     print("File not found. Please check the file path.")
     exit()
@@ -27,7 +27,7 @@ except Exception as e:
 x = data.drop(['crop'], axis=1)
 
 # Load the model
-model_file = 'model.joblib'
+model_file = '../models/model.joblib'
 model = joblib.load(model_file)
 # Predict the target
 y_pred = model.predict(x)
@@ -66,7 +66,7 @@ for i, prediction in enumerate(y_pred):
 
 # Save to CSV
 results_df = pd.DataFrame(results_data)
-results_df.to_csv('results.csv', index=False)
+results_df.to_csv('../output/results.csv', index=False)
 print("Results saved to results.csv")
 
 # Plot: Rainfall vs Predicted Yield
@@ -78,6 +78,6 @@ plt.ylabel('Predicted Yield (tons/ha)', fontsize=12)
 plt.title('FarmYield Predictor - Rainfall vs Yield Forecast', fontsize=14, fontweight='bold')
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
-plt.savefig('yield_forecast.png', dpi=300)
+plt.savefig('../output/yield_forecast.png', dpi=300)
 print("Forecast plot saved to yield_forecast.png")
 plt.close()

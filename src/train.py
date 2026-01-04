@@ -9,7 +9,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 # Load dataset
 try:
-    data = pd.read_csv('data.csv')
+    data = pd.read_csv('../data/data.csv')
 except FileNotFoundError:
     print("File not found. Please check the file path.")
     exit()
@@ -32,7 +32,7 @@ model = LinearRegression()
 model.fit(x_train, y_train)
 # Predict the target 
 y_pred = model.predict(x_test)
-model_file = 'model.joblib'
+model_file = '../models/model.joblib'
 joblib.dump(model, model_file)
 print(f"Model saved successfully to {model_file}")
 

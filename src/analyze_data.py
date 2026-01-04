@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Task 1: Read data.csv with pandas
 print("Loading data.csv...")
-df = pd.read_csv('data.csv')
+df = pd.read_csv('../data/data.csv')
 print(f"Data loaded successfully. Shape: {df.shape}\n")
 
 # Task 2: Print statistics - avg yield, min/max rain
@@ -57,7 +57,7 @@ plt.text(0.05, 0.95, f'Correlation: {correlation:.3f}',
          bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.tight_layout()
-plt.savefig('test.png', dpi=300, bbox_inches='tight')
+plt.savefig('../output/test.png', dpi=300, bbox_inches='tight')
 print("Plot saved as 'test.png'")
 print(f"Rainfall-Yield Correlation: {correlation:.3f}\n")
 
